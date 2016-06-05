@@ -1,11 +1,14 @@
 <?php
 require "fllat.php";
-
+require "config.php";
+$usdata = $config['user_data'];
+$thdata = $config['thread_data'];
 
 function auth($username, $password){
+	global $usdata, $thdata;
 	$username = clean($username);
-	if(!file_exists("./data-users/$username.dat")){ return false; }
-	$users = new Fllat($username, "./data-users");
+	if(!file_exists("$usdata/$username.dat")){ return false; }
+	$users = new Fllat($username, $usdata);
 	$pass = $users -> get("password", "username", $username);
 	if(hash("SHA256", $password) == $pass){
 		return true;
@@ -15,9 +18,10 @@ function auth($username, $password){
 }
 
 function adduser($username, $password, $email){
+	global $usdata, $thdata;
 	$username = clean($username);
 	$pass = hash("SHA256", $password);
-	$users = new Fllat($username, "./data-users");
+	$users = new Fllat($username, $usdata);
 	$de = $users -> get("username", "username", $username);
 	var_dump($de);
 	if($de){ return false; }
@@ -26,11 +30,12 @@ function adduser($username, $password, $email){
 	return $tmp;
 }
 function changePasswd($username, $currPass, $newPass){
+	global $usdata, $thdata;
 	$username = clean($username);
-	if(!file_exists("./data-users/$username.dat")){ return false; }
+	if(!file_exists("$usdata/$username.dat")){ return false; }
 	$pass = hash("SHA256", $currPass);
 	$username = clean($username);
-	$users = new Fllat($username, "./data-users");
+	$users = new Fllat($username, $usdata);
 	$index = $users -> index("username", $username);
 	var_dump($index);
 	if($index == null && !$index >= 0){ return false; }
@@ -44,10 +49,11 @@ function changePasswd($username, $currPass, $newPass){
 }
 
 function addPost($topic, $post, $username){
+	global $usdata, $thdata;
 	//Make topic readable to file system:
 	//Convert special chars. and spaces to "_"
 	$username = clean($username);
-	if(!file_exists("./data-users/$username.dat")){ return false; }
+	if(!file_exists("$usdata/$username.dat")){ return false; }
 	$name = $topic;
 	$topic = clean($topic);
 	$topic = trim($topic);
@@ -55,8 +61,8 @@ function addPost($topic, $post, $username){
 		$topic = "NULLName";
 		$name = "NULL Name";
 	}
-	if(!file_exists("./data/$topic.name")){ file_put_contents("./data/$topic.name",htmlspecialchars($name)); }
-	$posts = new Fllat($topic , "./data");
+	if(!file_exists("$thdata/$topic.name")){ file_put_contents("$thdata/$topic.name",htmlspecialchars($name)); }
+	$posts = new Fllat($topic , $thdata);
 	$date = date("Y-m-d h:i:sa");
 	$tmp = $posts -> add(array("post"=>$post, "time"=>$date, "user"=>$username));
 	if(!$tmp){ return false; }

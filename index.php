@@ -20,12 +20,13 @@ if($_SESSION['username']){
 	</thead>
 	<tbody>
 <?php
-$files1 = scan_dir("./data");
+$files1 = scan_dir($config['thread_data']);
+$data = $config['thread_data'];
 foreach($files1 as $file){
 	if($file != ".." && $file != "."){
 		$file = str_replace(".dat", "", $file);
-		$name = file_get_contents("./data/$file.name");
-		echo '<tr><td><a href="post.php?type=view&post='.$file.'">'.$name.'</a></td><td>'.date("Y-m-d h:i:sA",filemtime("./data/$file.dat")).'</td></tr>';
+		$name = file_get_contents("$data/$file.name");
+		echo '<tr><td><a href="post.php?type=view&post='.$file.'">'.$name.'</a></td><td>'.date("Y-m-d h:i:sA",filemtime("$data/$file.dat")).'</td></tr>';
 	}
 }
 ?>

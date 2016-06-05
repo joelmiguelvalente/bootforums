@@ -4,7 +4,8 @@ require("db.php");
 require("config.php");
 include("Parsedown.php");
 //Begin page
-
+$usdata = $config['user_data'];
+$thdata = $config['thread_data'];
 include("header.php");
 echo '<div class="container">';
 //Body content
@@ -31,10 +32,10 @@ if($_GET['type'] == "new"){
 if($_GET['type'] == "reply"){
 	?>
 	<div class="page-header">
-	  	<h1>Reply to: <?php $to = $_GET['post']; echo file_get_contents("./data/$to.name"); ?></h1>
+	  	<h1>Reply to: <?php $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?></h1>
 	</div>
 	<?php
-	if(!file_exists("./data/".$_GET['post'].'.dat')){ echo "That post does not exist!";} else {
+	if(!file_exists("$thdata/".$_GET['post'].'.dat')){ echo "That post does not exist!";} else {
 	?>
 	<p>You may use <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> in the text area.</p>
 	<form action="submit.php" method="POST">
@@ -46,7 +47,7 @@ if($_GET['type'] == "reply"){
 <script type="text/javascript">
 
     $(document).ready(function() {
-        document.title = '<?php echo $config['title']." | Reply: "; $to = $_GET['post']; echo file_get_contents("./data/$to.name"); ?>';
+        document.title = '<?php echo $config['title']." | Reply: "; $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?>';
     });
 
 </script>
@@ -56,7 +57,7 @@ if($_GET['type'] == "reply"){
 if($_GET['type'] == "view"){
 	?>
 	<div class="page-header">
-	  	<h1>View: <?php $to = $_GET['post']; echo file_get_contents("./data/$to.name"); ?></h1>
+	  	<h1>View: <?php $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?></h1>
 	</div>
 	<?php 
 	if($_SESSION['username']){
@@ -68,8 +69,8 @@ if($_GET['type'] == "view"){
 	
 	<?php
 	$post_id = clean($_GET['post']);
-	if(!file_exists("./data/$post_id.dat")){ echo "This post does not exist!"; } else {
-	$posts = new Fllat($post_id , "./data");
+	if(!file_exists("$thdata/$post_id.dat")){ echo "This post does not exist!"; } else {
+	$posts = new Fllat($post_id , $thdata);
 	$p = $posts -> select();
 	$i = 1;
 	foreach($p as $pp){
@@ -94,7 +95,7 @@ if($_GET['type'] == "view"){
 <script type="text/javascript">
 
     $(document).ready(function() {
-        document.title = '<?php echo $config['title']." | "; $to = $_GET['post']; echo file_get_contents("./data/$to.name"); ?>';
+        document.title = '<?php echo $config['title']." | "; $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?>';
     });
 
 </script>

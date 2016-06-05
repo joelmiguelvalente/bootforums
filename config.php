@@ -1,10 +1,12 @@
 <?php
 $config = array(
-	"title"=>"BootForums",
-	"desc"=>"Open Source Bootstrap themed forum for php 5.6+ - Flat file, no Database required!",
-	"captcha" => array(
-    					'min_length' => 6,
-    					'max_length' => 8,
+	"title"=>"BootForums", //Title for the forums
+	"desc"=>"Open Source Bootstrap themed forum for php 5.6+ - Flat file, no Database required!", //Description for the site in html (Not displayed on page, but in search engines.)
+	"user_data" => "/var/forum_data/users", //Folder to store user data in
+	"thread_data" => "/var/forum_data/threads", //Folder to store thread data in
+	"captcha" => array( //Configure Captcha settings for registration.
+    					'min_length' => 4,
+    					'max_length' => 4,
     					'backgrounds' => array('backgrounds/45-degree-fabric.png','backgrounds/45-degree-fabric.png','backgrounds/45-degree-fabric.png','backgrounds/45-degree-fabric.png'),
     					'fonts' => array('fonts/times_new_yorker.ttf'),
     					'characters' => 'ABCDEFGHJKLMNPRSTUVWXYZabcdefghjkmnprstuvwxyz23456789',
