@@ -2,8 +2,8 @@
 $config = array(
 	"title"=>"BootForums", //Title for the forums
 	"desc"=>"Open Source Bootstrap themed forum for php 5.6+ - Flat file, no Database required!", //Description for the site in html (Not displayed on page, but in search engines.)
-	"user_data" => "/var/forum_data/users", //Folder to store user data in
-	"thread_data" => "/var/forum_data/threads", //Folder to store thread data in
+	"user_data" => "/var/forum_data/users", //Folder to store user data in, make sure to give proper permissions (0744) and the owner of the folder must be apache's user (Or nginx's user)
+	"thread_data" => "/var/forum_data/threads", //Folder to store thread data in, make sure to give proper permissions (0744) and the owner of the folder must be apache's user (Or nginx's user)
 	"captcha" => array( //Configure Captcha settings for registration.
     					'min_length' => 4,
     					'max_length' => 4,
