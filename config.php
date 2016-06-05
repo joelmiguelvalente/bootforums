@@ -20,6 +20,7 @@ $config = array(
     					'shadow_offset_x' => -1,
     					'shadow_offset_y' => 1
 					),
-	"ssl" => false
+	"ssl" => false, //Eventually this will force SSL on the site, but right now does nothing.
+	"announce" => "This forum is currently in beta, but please enjoy your stay!" //Announcement to show on home page. set to "" if you want to disable. Supports HTML if needed.
 	);
 ?>

@@ -6,6 +6,9 @@ require("config.php");
 include("header.php");
 echo '<div class="container">';
 //Body content
+if($config['announce'] !== ""){
+	echo '<div class="alert alert-info">'.$config['announce'].'</div>';
+}
 if($_SESSION['username']){
 	echo '<a href="post.php?type=new" class="btn btn-primary">New Post</a><br />';
 }
