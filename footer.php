@@ -3,8 +3,7 @@ require("config.php");
 ?>
 <br />
 <br />
-<br />
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
+<nav class="navbar navbar-inverse">
 <div class="container">
   <div class="container-fluid">
     <br /><p class="text-center" style="color:white"><?php echo $config['copyright']; ?></p>

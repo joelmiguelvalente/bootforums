@@ -69,7 +69,7 @@ if($_GET['type'] == "view"){
 	<?php 
 	if($_SESSION['username']){
 		?>
-		<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a><br /><br />
+		<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a><br />
 		<?php
 	}
 	?>
@@ -79,17 +79,59 @@ if($_GET['type'] == "view"){
 	if(!file_exists("$thdata/$post_id.dat")){ echo "This post does not exist!"; } else {
 	$posts = new Fllat($post_id , $thdata);
 	$p = $posts -> select();
-	$i = 1;
+	
+	$page = ! empty( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+	if($_GET['page'] == "first" || $_GET['page'] == "last"){
+		$page = $_GET['page'];
+		if($page == "first"){
+			$page = 1;
+		}
+		if($page == "last"){
+			$page = count($p);
+		}
+	}
+	$total = count( $p ); //total items in array    
+	$limit = $config['perPageThread']; //per page    
+	$totalPages = ceil( $total/ $limit ); //calculate total pages
+	$page = max($page, 1); //get 1 page when $_GET['page'] <= 0
+	$page = min($page, $totalPages); //get last page when $_GET['page'] > $totalPages
+	$offset = ($page - 1) * $limit;
+	if( $offset < 0 ) $offset = 0;
+	$p = array_slice( $p, $offset, $limit ,true);
+	echo '<ul class="pagination">';
+	echo '<li><a href="./post.php?page=first&type=view&post='.$post_id.'">First</a></li>';
+	for($i = 1; $i <= $totalPages; $i++){
+		if($i == $page){
+			echo '<li class="active"><a href="./post.php?page='.$i.'&type=view&post='.$post_id.'">'.$i.'</a></li>';
+		} else {
+			echo '<li><a href="./post.php?page='.$i.'&type=view&post='.$post_id.'">'.$i.'</a></li>';
+		}
+	}
+	echo '<li><a href="./post.php?page=last&type=view&post='.$post_id.'">Last</a></li>';
+	echo "</ul>";
 	foreach($p as $pp){
+		$k = array_search($pp, $p);
+		$k++;
 		$pmd= Parsedown::instance()
    		->setMarkupEscaped(true) # escapes markup (HTML)
    		->text($pp['post']);
 		echo '<div class="panel panel-default">
-  				<div class="panel-heading"><b>'.$pp['user'].'</b> @ '.$pp['time'].'<span class="pull-right">#'.$i.'</span></div>
+  				<div class="panel-heading"><b>'.$pp['user'].'</b> @ '.$pp['time'].'<span class="pull-right">#'.$k.'</span></div>
   				<div class="panel-body">'.$pmd.'</div>
 			</div>';
-			$i++;
 	}
+	echo '<ul class="pagination">';
+	echo '<li><a href="./post.php?page=first&type=view&post='.$post_id.'">First</a></li>';
+	for($i = 1; $i <= $totalPages; $i++){
+		if($i == $page){
+			echo '<li class="active"><a href="./post.php?page='.$i.'&type=view&post='.$post_id.'">'.$i.'</a></li>';
+		} else {
+			echo '<li><a href="./post.php?page='.$i.'&type=view&post='.$post_id.'">'.$i.'</a></li>';
+		}
+	}
+	echo '<li><a href="./post.php?page=last&type=view&post='.$post_id.'">Last</a></li>';
+	echo "</ul>";
+	
 	}
 ?><br />
 <?php 
