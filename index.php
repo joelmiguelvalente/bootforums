@@ -47,7 +47,7 @@ foreach($files1 as $file){
 	if($file != ".." && $file != "."){
 		$file = str_replace(".dat", "", $file);
 		$name = file_get_contents("$data/$file.name");
-		echo '<tr><td><a href="post.php?page=last&type=view&post='.$file.'">'.$name.'</a></td><td>'.date("Y-m-d h:i:sA",filemtime("$data/$file.dat")).'</td></tr>';
+		echo '<tr><td><a href="post.php?page=1&type=view&post='.$file.'">'.$name.'</a> | <a style="font-size:9px;" href="post.php?page=last&type=view&post='.$file.'">Jump to last</a></td><td>'.date("Y-m-d h:i:sA",filemtime("$data/$file.dat")).'</td></tr>';
 	}
 }
 ?>
