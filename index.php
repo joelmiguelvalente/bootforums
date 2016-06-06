@@ -2,6 +2,16 @@
 session_start();
 require("db.php");
 require("config.php");
+
+//Force SSL if config says so.
+if($config['ssl'] == true){
+	if($_SERVER["HTTPS"] != "on")
+	{
+    	header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    	die();
+	}
+}
+
 //Begin page
 include("header.php");
 echo '<div class="container">';

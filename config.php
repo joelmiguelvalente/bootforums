@@ -2,6 +2,7 @@
 $config = array(
 	"title"=>"BootForums", //Title for the forums
 	"desc"=>"Open Source Bootstrap themed forum for php 5.6+ - Flat file, no Database required!", //Description for the site in html (Not displayed on page, but in search engines.)
+	//Data folders must NOT be the same folders, please follow a similar structure to what I have below. (/path/to/data/users & /path/to/data/threads)
 	"user_data" => "/var/forum_data/users", //Folder to store user data in, make sure to give proper permissions (0744) and the owner of the folder must be apache's user (Or nginx's user)
 	"thread_data" => "/var/forum_data/threads", //Folder to store thread data in, make sure to give proper permissions (0744) and the owner of the folder must be apache's user (Or nginx's user)
 	"captcha" => array( //Configure Captcha settings for registration.
@@ -20,7 +21,7 @@ $config = array(
     					'shadow_offset_x' => -1,
     					'shadow_offset_y' => 1
 					),
-	"ssl" => false, //Eventually this will force SSL on the site, but right now does nothing.
+	"ssl" => true, //Force an SSL connection for Forums
 	"announce" => "This forum is currently in beta, but please enjoy your stay!" //Announcement to show on home page. set to "" if you want to disable. Supports HTML if needed.
 	);
 ?>
