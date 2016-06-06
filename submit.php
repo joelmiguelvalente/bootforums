@@ -13,7 +13,7 @@ switch($_POST['type']){
 			die("Invalid name detected, please try again!");
 		}
 		addPost($_POST['post-id'], $_POST['text'], $_SESSION['username']);
-		header("Location: ./post.php?type=view&post=".clean($_POST['post-id']));
+		header("Location: ./post.php?page=last&type=view&post=".clean($_POST['post-id']));
 		die();
 		break;
 	case "new":
