@@ -9,10 +9,11 @@ $_SESSION['captcha'] = simple_php_captcha( $config['captcha']);
 include("header.php");
 echo '<div class="container">';
 //Body content
-?>
-<div class="page-header">
+echo '<div class="page-header">
   <h1>Registration</h1>
-</div>
+</div>';
+if($config['registration'] == true){
+?>
 <p><?php if($_GET['msg']){ echo $_GET['msg']; } ?></p>
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="reg" />
@@ -32,6 +33,10 @@ echo '<div class="container">';
   
 </form>
 <?php
+} else {
+	echo "<p>Registration is currently disabled by the site administrator. If you think you got this in error, please contact the web master.</p>";
+}
+
 echo '</div>';
 include("footer.php");
 ?>
