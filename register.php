@@ -26,7 +26,7 @@ echo '<div class="container">';
   </div>
   <div class="form-group">
   	<label for="cap">Captcha Request:</label><br />
-  	<img src="<?php echo $_SESSION['captcha']['image_src']; ?>"><input type="text" name="cap" id="cap" rows="8">
+  	<img src="<?php echo $_SESSION['captcha']['image_src']; ?>">&nbsp;&nbsp;<input type="text" name="cap" id="cap" rows="8">
   </div>
   <button type="submit" class="btn btn-primary pull-right">Submit</button>
   

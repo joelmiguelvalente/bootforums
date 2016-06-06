@@ -22,6 +22,8 @@ $config = array(
     					'shadow_offset_y' => 1
 					),
 	"ssl" => true, //Force an SSL connection for Forums
-	"announce" => "This forum is currently in beta, but please enjoy your stay!" //Announcement to show on home page. set to "" if you want to disable. Supports HTML if needed.
+	"announce" => "This forum is currently in beta, but please enjoy your stay!", //Announcement to show on home page. set to "" if you want to disable. Supports HTML if needed.
+	"copyright" => "Copyright &copy; URGERO.ORG 2016", //Copyright footer, can be anything, don't be shy. (Copyright is centered in page.)
+	"footer" => '<center><a href="https://github.com/mitchellurgero/bootforums">Get BootForums from GitHub today!</a></center>' //Footer will be displayed under the copyright text, you can put links, or whatever you want in here.
 	);
 ?>
