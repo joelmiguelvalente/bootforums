@@ -29,6 +29,9 @@ switch($_POST['type']){
 		if($_POST['cap'] != $_SESSION['captcha']['code']){
 			header("Location: ./register.php?msg=Captcha invalid!"); die();
 		}
+		if($config['registration'] == false){
+			header("Location: ./register.php?msg=Registration is disabled! You cannot register, even when you want to be sneaky."); die();
+		}
 		$msg = adduser($_POST['user'], $_POST['pass']);
 		if(!$msg){ header("Location: ./register.php?msg=Registration failed!"); die(); }
 		header("Location: ./login.php?msg=Login to continue registration, ".clean($_POST['user']));

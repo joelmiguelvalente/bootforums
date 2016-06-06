@@ -14,7 +14,7 @@ echo '<div class="page-header">
 </div>';
 if($config['registration'] == true){
 ?>
-<p><?php if($_GET['msg']){ echo $_GET['msg']; } ?></p>
+<?php if($_GET['msg']){ echo '<p style="color:red;">'.$_GET['msg'].'</p>'; } ?>
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="reg" />
 	<div class="form-group">
