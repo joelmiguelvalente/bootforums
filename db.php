@@ -71,9 +71,8 @@ function addPost($topic, $post, $username){
 	$name = $topic;
 	$topic = clean($topic);
 	$topic = trim($topic);
-	if($topic === ''){
-		$topic = "NULLName";
-		$name = "NULL Name";
+	if($topic === '' || $topic === null ){
+		return false;
 	}
 	if(!file_exists("$thdata/$topic.name")){ file_put_contents("$thdata/$topic.name",htmlspecialchars($name)); }
 	$posts = new Fllat($topic , $thdata);
