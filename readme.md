@@ -38,6 +38,15 @@ Just download (Clone or download zip) and put in a directory for apache or nginx
 
 ## Installation notes:
 - Be sure that when configuring the site for the first time that the thread_data and user_data variables in config.php are OUTSIDE the webroot (which on ubuntu is /var/www/html) this will save you a lot of hassle down the road with security. 
-- When you create the thread_data and user_data folders, be sure to give www-data permissions to access them. (And with 644 permissions on those folders)
+- When you create the thread_data and user_data folders, be sure to give www-data permissions to access them. (And with 744 permissions on those folders)
+
+
+The following commands will work in most cases for creating the database folders for the forum:
+> sudo mkdir /var/forum_data/threads
+> sudo mkdir /var/forum_data/users
+> sudo chown -R www-data:www-data /var/forum_data/threads
+> sudo chown -R www-data:www-data /var/forum_data/users
+> sudo chmod 744 /var/forum_data/threads
+> sudo chmod 744 /var/forum_data/users
 
 
