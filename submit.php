@@ -49,6 +49,18 @@ switch($_POST['type']){
 		$_SESSION['username'] = $_POST['user'];
 		header("Location: ./");
 		die();
+	case "edit":
+		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
+			die("Invalid name detected, please try again!");
+		}
+		
+		update($_POST['post-id'], $_SESSION['username'], $_POST['time'], $_POST['text'], $_POST['reply_num']);
+		header("Location: ./post.php?page=last&type=view&post=".clean($_POST['post-id']));
+		die();
+		break;
+		
+		break;
 }
 function isNotEmpty($input) 
 {

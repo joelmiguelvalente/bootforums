@@ -126,6 +126,20 @@ class Fllat
 		$_db[$index] = array_merge($_db[$index], $data);
 		return $this -> rw($_db);
 	}
+	function canUpdatePost($index, $user) {
+		$_old = file_get_contents($this -> file);
+		if ($_old) {
+			$_db = json_decode(file_get_contents($this -> file), true);
+		} else {
+			$_db = array();
+		};
+		$temp = $_db[$index];
+		if($temp['user'] == $user){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Returns the index of a row where key matches value

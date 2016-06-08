@@ -61,6 +61,56 @@ if($_GET['type'] == "reply"){
 	<?php
 	}
 }
+if($_GET['type'] == "edit"){
+	?>
+	<div class="page-header">
+	  	<h1>Edit Reply to: <?php $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?><br /><small>Post Number: <?php echo $_GET['reply_num']; ?></small></h1>
+	</div>
+	<?php
+	if(!file_exists("$thdata/".$_GET['post'].'.dat')){ echo "That post does not exist!";} else {
+	?>
+	<p>You may use <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> in the text area.</p>
+	<form action="submit.php" method="POST">
+		<input style="display: none;" name="type" id="type" value="edit"></input>
+		<input style="display: none;" name="reply_num" id="reply_num" value="<?php echo $_GET['reply_num']; ?>"></input>
+		<input style="display: none;" name="post-id" id="post-id" value="<?php echo $_GET['post']; ?>"></input>
+		<?php 
+			$post_id = clean($_GET['post']);
+			$posts = new Fllat($post_id , $thdata);
+			$p = $posts -> select();
+			$temp_time = "";
+			$temp_text = "";
+			foreach($p as $pp){
+				$k = array_search($pp, $p);
+				$k++;
+				if($pp['user'] == $_SESSION['username'] && $k == $_GET['reply_num']){
+					$temp_text = $pp['post'];
+					$temp_time = $pp['time'];
+					break;
+				}
+			}
+			if($temp_text == "" || $temp_text == null){
+				echo 'You do not have permission to edit this reply! Please contact the web master.';
+			} else {
+				echo '<textarea name="text" id="text" rows="10" cols="100%" class="form-control">'.$temp_text.'</textarea><br />
+				<input style="display: none;" name="time" id="time" value="'.$temp_time.'"></input>
+				<button type="submit" class="btn btn-info pull-right">Submit</button>
+				';
+			}
+		?>
+		
+		
+	</form>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        document.title = '<?php echo $config['title']." | Reply: "; $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?>';
+    });
+
+</script>
+	<?php
+	}
+}
 if($_GET['type'] == "view"){
 	?>
 	<div class="page-header">
@@ -115,8 +165,13 @@ if($_GET['type'] == "view"){
 		$pmd= Parsedown::instance()
    		->setMarkupEscaped(true) # escapes markup (HTML)
    		->text($pp['post']);
+   		if($pp['user'] == $_SESSION['username']){
+   			$edit = '<a href="./post.php?type=edit&post='.$post_id.'&reply_num='.$k.'">Edit Reply</a>';
+   		} else {
+   			$edit = "";
+   		}
 		echo '<div class="panel panel-default">
-  				<div class="panel-heading"><b>'.$pp['user'].'</b> @ '.$pp['time'].'<span class="pull-right">#'.$k.'</span></div>
+  				<div class="panel-heading"><b>'.$pp['user'].'</b> @ '.$pp['time'].'&nbsp;&nbsp;'.$edit.'<span class="pull-right">#'.$k.'</span></div>
   				<div class="panel-body">'.$pmd.'</div>
 			</div>';
 	}

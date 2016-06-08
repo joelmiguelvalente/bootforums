@@ -37,7 +37,6 @@ function changePasswd($username, $currPass, $newPass){
 	$username = clean($username);
 	$users = new Fllat($username, $usdata);
 	$index = $users -> index("username", $username);
-	var_dump($index);
 	if($index == null && !$index >= 0){ return false; }
 	$canChange = $users ->get("password","username", $username);
 	var_dump($canChange);
@@ -47,7 +46,22 @@ function changePasswd($username, $currPass, $newPass){
 	$tmp = $users -> update($index, $cc_temp);
 	return $tmp;
 }
+function update($post, $user, $time, $text, $index){
+	global $usdata, $thdata;
+	if(!file_exists("$usdata/$user.dat")){ return false; }
+	$post = clean($post);
+	$post = trim($post);
+	$posts = new Fllat($post , $thdata);
+	if($posts -> canUpdatePost($index - 1, $user)){
+		$tmp = array("post"=>$text, "time" =>$time, "user"=>$user);
+		if($index == null && !$index >= 0){ return false; }
+		$posts -> update($index - 1, $tmp);
+		return true;
+	} else {
+		return false;
+	}
 
+}
 function addPost($topic, $post, $username){
 	global $usdata, $thdata;
 	//Make topic readable to file system:
