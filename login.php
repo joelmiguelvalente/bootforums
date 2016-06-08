@@ -2,8 +2,10 @@
 session_start();
 require("db.php");
 require("config.php");
+require("simple-php-captcha.php");
 //Begin page
 include("header.php");
+$_SESSION['captcha'] = simple_php_captcha( $config['captchaLogin']);
 echo '<div class="container">';
 //Body content
 ?>
@@ -21,6 +23,17 @@ echo '<div class="container">';
     <label for="pass">Password:</label>
     <input type="password" class="form-control" id="pass" name="pass">
   </div>
+  	<?php 
+  	if($config['captchaLoginForce'] === true){
+  		echo '';
+  		?>
+  		  <div class="form-group">
+  			<label for="cap">Captcha Request:</label><br />
+  			<img src="<?php echo $_SESSION['captcha']['image_src']; ?>">&nbsp;&nbsp;<input type="text" name="cap" id="cap" rows="8">
+  		</div>
+  		<?php
+  	}
+  	?>
   <button type="submit" class="btn btn-primary pull-right">Submit</button>
 </form>
 <?php

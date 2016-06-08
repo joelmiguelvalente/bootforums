@@ -38,6 +38,9 @@ switch($_POST['type']){
 		die();
 		break;
 	case "login":
+		if($_POST['cap'] != $_SESSION['captcha']['code'] && $config['captchaLoginForce'] === true){
+			header("Location: ./login.php?msg=Captcha invalid!"); die();
+		}
 		$msg = auth($_POST['user'], $_POST['pass']);
 		if(!$msg){
 			header("Location: ./login.php?msg=Incorrect username or password");
