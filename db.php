@@ -10,7 +10,7 @@ function auth($username, $password){
 	if(!file_exists("$usdata/$username.dat")){ return false; }
 	$users = new Fllat($username, $usdata);
 	$pass = $users -> get("password", "username", $username);
-	if(hash("SHA256", $password) == $pass){
+	if(password_verify($password, $pass)){
 		return true;
 	} else {
 		return false;
@@ -20,10 +20,11 @@ function auth($username, $password){
 function adduser($username, $password, $email){
 	global $usdata, $thdata;
 	$username = clean($username);
-	$pass = hash("SHA256", $password);
+	$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+	$options = array('cost' => 11,'salt'=> $salt);
+	$pass = password_hash($password, PASSWORD_BCRYPT, $options);
 	$users = new Fllat($username, $usdata);
 	$de = $users -> get("username", "username", $username);
-	var_dump($de);
 	if($de){ return false; }
 	$tmp = $users -> add(array("username"=>$username, "password"=>$pass));
 	if(!$tmp){ $tmp = "Please login to continue registration:";}
@@ -36,14 +37,16 @@ function changePasswd($username, $currPass, $newPass1, $newPass2){
 		return "The new password does not match verification, please try again!";
 	}
 	if(!file_exists("$usdata/$username.dat")){ return "Username does not exist"; }
-	$pass = hash("SHA256", $currPass);
+	$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+	$options = array('cost' => 11,'salt'=> $salt);
 	$username = clean($username);
 	$users = new Fllat($username, $usdata);
 	$index = $users -> index("username", $username);
 	if($index === null && !$index >= 0){ return "Could not find a password?"; }
 	$canChange = $users ->get("password","username", $username);
-	if($canChange != $pass) { return "Current Password Mismatch"; }
-	$cc_temp = array("username"=>$username, "password"=>hash("SHA256",$newPass1));
+	$pass = password_verify($currPass, $canChange);
+	if(!$pass) { return "Current Password Mismatch"; }
+	$cc_temp = array("username"=>$username, "password"=>password_hash($newPass1, PASSWORD_BCRYPT, $options));
 	$tmp = $users -> update($index, $cc_temp);
 	return $tmp;
 }
