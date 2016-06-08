@@ -88,6 +88,10 @@ function lock($thread, $user){
 	if(file_exists("$thdata/$thread.dat")){
 		$posts = new Fllat($thread , $thdata);
 		$canLock = $posts -> canUpdatePost(0, $user);
+		if(isAdmin($user)){
+			file_put_contents("$thdata/$thread.lockadmin", "");
+			return true;
+		}
 		if($canLock){
 			file_put_contents("$thdata/$thread.lock", "");
 			return true;
@@ -105,7 +109,13 @@ function unlock($thread, $user){
 	if(file_exists("$thdata/$thread.dat")){
 		$posts = new Fllat($thread , $thdata);
 		$canLock = $posts -> canUpdatePost(0, $user);
+		if(isAdmin($user)){
+			if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
+			if(file_exists("$thdata/$thread.lockadmin")){unlink("$thdata/$thread.lockadmin");}
+			return true;
+		}
 		if($canLock){
+			if(!isAdmin($user)){return false;}
 			if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
 			return true;
 		} else {
@@ -115,6 +125,21 @@ function unlock($thread, $user){
 		return false;
 	}
 	
+}
+function deletePost($thread, $user){
+	global $thdata;
+	if(isAdmin($user)){
+		if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
+		if(file_exists("$thdata/$thread.lockadmin")){unlink("$thdata/$thread.lockadmin");}
+		if(file_exists("$thdata/$thread.dat")){unlink("$thdata/$thread.dat");}
+		if(file_exists("$thdata/$thread.name")){unlink("$thdata/$thread.name");}
+		return true;
+	}
+	return false;
+}
+function isAdmin($user){
+	global $config;
+	if(in_array($user, $config['admins'])){ return true; }else{return false;}
 }
 function clean($string) {
 	$string= str_replace('  ', '', $string);

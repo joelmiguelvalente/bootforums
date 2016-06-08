@@ -24,6 +24,9 @@ if($_SESSION['username'] && $config['allowNewThreads'] !== false){
 if(!$config['allowNewThreads']){
 	echo '<div class="alert alert-warning">New thread creation has been locked by the Forum Administrator.</div>';
 }
+if(in_array($_SESSION['username'], $config['admins']) && $config['allowNewThreads'] === false){
+	echo '<a href="post.php?type=new" class="btn btn-primary">New Post</a><br />';
+}
 ?>
 <div class="page-header">
   <h1>Latest Posts</h1>
@@ -84,6 +87,7 @@ function scan_dir($dir) {
         if (in_array($file, $ignored)) continue;
         if(strpos($file,".name")) continue;
         if(strpos($file,".lock")) continue;
+        if(strpos($file,".lockadmin")) continue;
         $files[$file] = filemtime($dir . '/' . $file);
     }
 

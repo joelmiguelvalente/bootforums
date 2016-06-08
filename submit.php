@@ -27,7 +27,7 @@ switch($type){
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
 			die("Invalid name detected, please try again!");
 		}
-		if(!$config['allowNewThreads']){
+		if(!$config['allowNewThreads'] && !in_array($_SESSION['username'], $config['admins'])){
 			header("Location: ./");
 			die();
 			break;
@@ -79,6 +79,12 @@ switch($type){
 		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
 		unlock($_GET['post'], $_SESSION['username']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_GET['post']));
+		die();
+		break;
+	case "delete":
+		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		deletePost($_GET['post'], $_SESSION['username']);
+		header("Location: ./index.php");
 		die();
 		break;
 }

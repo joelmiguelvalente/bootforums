@@ -1,6 +1,6 @@
 <?php
 $config = array(
-	"admin" => array("admin"), //Username(s) of the account you want to be admin(**Register this account FIRST) This user will have access to locking threads, or deleting them even if they do not own it.
+	"admins" => array("admin"), //Username(s) of the account you want to be admin(**Register this account FIRST) This user will have access to locking threads, or deleting them even if they do not own it.
 	"title"=>"BootForums", //Title for the forums
 	"desc"=>"Open Source Bootstrap themed forum for php 5.6+ - Flat file, no Database required!", //Description for the site in html (Not displayed on page, but in search engines.)
 	//Data folders must NOT be the same folders, please follow a similar structure to what I have below. (/path/to/data/users & /path/to/data/threads)
