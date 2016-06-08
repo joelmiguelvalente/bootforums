@@ -29,20 +29,21 @@ function adduser($username, $password, $email){
 	if(!$tmp){ $tmp = "Please login to continue registration:";}
 	return $tmp;
 }
-function changePasswd($username, $currPass, $newPass){
+function changePasswd($username, $currPass, $newPass1, $newPass2){
 	global $usdata, $thdata;
 	$username = clean($username);
-	if(!file_exists("$usdata/$username.dat")){ return false; }
+	if($newPass1 != $newPass2){
+		return "The new password does not match verification, please try again!";
+	}
+	if(!file_exists("$usdata/$username.dat")){ return "Username does not exist"; }
 	$pass = hash("SHA256", $currPass);
 	$username = clean($username);
 	$users = new Fllat($username, $usdata);
 	$index = $users -> index("username", $username);
-	if($index == null && !$index >= 0){ return false; }
+	if($index === null && !$index >= 0){ return "Could not find a password?"; }
 	$canChange = $users ->get("password","username", $username);
-	var_dump($canChange);
-	
-	if($canChange != $pass) { return false; }
-	$cc_temp = array("username"=>$username, "password"=>hash("SHA256",$newPass));
+	if($canChange != $pass) { return "Current Password Mismatch"; }
+	$cc_temp = array("username"=>$username, "password"=>hash("SHA256",$newPass1));
 	$tmp = $users -> update($index, $cc_temp);
 	return $tmp;
 }

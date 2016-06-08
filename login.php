@@ -12,7 +12,7 @@ echo '<div class="container">';
 <div class="page-header">
   <h1>Log In</h1>
 </div>
-<?php if($_GET['msg']){ echo '<p style="color:red;">'.$_GET['msg'].'</p>'; } ?>
+<?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="login" />
 	<div class="form-group">

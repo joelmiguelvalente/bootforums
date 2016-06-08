@@ -87,6 +87,16 @@ switch($type){
 		header("Location: ./index.php");
 		die();
 		break;
+	case "passwd":
+		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		$msg = changePasswd($_SESSION['username'], $_POST['currPass'], $_POST['pass1'], $_POST['pass2']);
+		if($msg == false){
+			$msg = "There was an error updating the password, please try again.";
+		}
+		if($msg !== false){
+			$msg = "Password has changed successfully!";
+		}
+		header("Location: ./change.php?msg=$msg");
 }
 function isNotEmpty($input) 
 {
