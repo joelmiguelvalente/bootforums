@@ -112,24 +112,42 @@ if($_GET['type'] == "edit"){
 	}
 }
 if($_GET['type'] == "view"){
+	$post_id = clean($_GET['post']);
 	?>
 	<div class="page-header">
+		<?php
+		if(file_exists("$thdata/$post_id.lock")){
+			echo '<div class="alert alert-warning">This thread has been locked.</div>';	
+		}
+		?>
 	  	<h1>View: <?php $to = $_GET['post']; echo file_get_contents("$thdata/$to.name"); ?></h1>
 	</div>
-	<?php 
+	<?php
+	
 	if($_SESSION['username']){
-		?>
-		<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a><br />
-		<?php
+		if(!file_exists("$thdata/$post_id.lock")){
+			?>
+			<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a>
+			<?php
+		}
 	}
 	?>
 	
 	<?php
-	$post_id = clean($_GET['post']);
+	
 	if(!file_exists("$thdata/$post_id.dat")){ echo "This post does not exist!"; } else {
 	$posts = new Fllat($post_id , $thdata);
 	$p = $posts -> select();
-	
+	$canLock = $posts -> canUpdatePost(0, $_SESSION['username']);
+	if($canLock){
+		if(!file_exists("$thdata/$post_id.lock")){
+			echo '&nbsp;&nbsp;<a href="./submit.php?type=lock&post='.$post_id.'" class="btn btn-primary btn-sm">Lock Thread</a><br />';
+		} else {
+			echo '&nbsp;&nbsp;<a href="./submit.php?type=unlock&post='.$post_id.'" class="btn btn-primary btn-sm">Unlock Thread</a><br />';
+		}
+	} else {
+		echo '<br />';
+	}
 	$page = ! empty( $_GET['page'] ) ? (int) $_GET['page'] : 1;
 	if($_GET['page'] == "first" || $_GET['page'] == "last"){
 		$page = $_GET['page'];
@@ -191,9 +209,11 @@ if($_GET['type'] == "view"){
 ?><br />
 <?php 
 	if($_SESSION['username']){
-		?>
-		<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a><br />
-		<?php
+		if(!file_exists("$thdata/$post_id.lock")){
+			?>
+			<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a>
+			<?php
+		}
 	}
 	?>
 <script type="text/javascript">

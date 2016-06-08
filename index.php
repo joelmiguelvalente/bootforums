@@ -18,8 +18,11 @@ echo '<div class="container">';
 if($config['announce'] !== ""){
 	echo '<div class="alert alert-info">'.$config['announce'].'</div>';
 }
-if($_SESSION['username']){
+if($_SESSION['username'] && $config['allowNewThreads'] !== false){
 	echo '<a href="post.php?type=new" class="btn btn-primary">New Post</a><br />';
+}
+if(!$config['allowNewThreads']){
+	echo '<div class="alert alert-warning">New thread creation has been locked by the Forum Administrator.</div>';
 }
 ?>
 <div class="page-header">
@@ -80,6 +83,7 @@ function scan_dir($dir) {
     foreach (scandir($dir) as $file) {
         if (in_array($file, $ignored)) continue;
         if(strpos($file,".name")) continue;
+        if(strpos($file,".lock")) continue;
         $files[$file] = filemtime($dir . '/' . $file);
     }
 

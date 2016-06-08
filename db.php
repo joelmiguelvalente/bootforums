@@ -81,6 +81,41 @@ function addPost($topic, $post, $username){
 	if(!$tmp){ return false; }
 	return true;
 }
+function lock($thread, $user){
+	global $usdata, $thdata;
+	$user = clean($user);
+	$thread = clean($thread);
+	if(file_exists("$thdata/$thread.dat")){
+		$posts = new Fllat($thread , $thdata);
+		$canLock = $posts -> canUpdatePost(0, $user);
+		if($canLock){
+			file_put_contents("$thdata/$thread.lock", "");
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+function unlock($thread, $user){
+	global $usdata, $thdata;
+	$user = clean($user);
+	$thread = clean($thread);
+	if(file_exists("$thdata/$thread.dat")){
+		$posts = new Fllat($thread , $thdata);
+		$canLock = $posts -> canUpdatePost(0, $user);
+		if($canLock){
+			if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	
+}
 function clean($string) {
 	$string= str_replace('  ', '', $string);
    	$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.

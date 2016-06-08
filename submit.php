@@ -2,10 +2,16 @@
 session_start();
 require("db.php");
 require("config.php");
+$type = "";
+if($_POST['type']){
+	$type = $_POST['type'];
+}
+if($_GET['type']){
+	$type = $_GET['type'];
+}
 
 
-
-switch($_POST['type']){
+switch($type){
 	
 	case "reply":
 		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
@@ -20,6 +26,11 @@ switch($_POST['type']){
 		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
 			die("Invalid name detected, please try again!");
+		}
+		if(!$config['allowNewThreads']){
+			header("Location: ./");
+			die();
+			break;
 		}
 		addPost($_POST['post-id'], $_POST['text'], $_SESSION['username']);
 		header("Location: ./post.php?type=view&post=".clean($_POST['post-id']));
@@ -54,12 +65,21 @@ switch($_POST['type']){
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
 			die("Invalid name detected, please try again!");
 		}
-		
 		update($_POST['post-id'], $_SESSION['username'], $_POST['time'], $_POST['text'], $_POST['reply_num']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_POST['post-id']));
 		die();
 		break;
-		
+	case "lock":
+		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		lock($_GET['post'], $_SESSION['username']);
+		header("Location: ./post.php?page=last&type=view&post=".clean($_GET['post']));
+		die();
+		break;
+	case "unlock":
+		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		unlock($_GET['post'], $_SESSION['username']);
+		header("Location: ./post.php?page=last&type=view&post=".clean($_GET['post']));
+		die();
 		break;
 }
 function isNotEmpty($input) 
