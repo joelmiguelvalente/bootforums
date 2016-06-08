@@ -114,8 +114,7 @@ function unlock($thread, $user){
 			if(file_exists("$thdata/$thread.lockadmin")){unlink("$thdata/$thread.lockadmin");}
 			return true;
 		}
-		if($canLock){
-			if(!isAdmin($user)){return false;}
+		if($canLock && !file_exists("$thdata/$thread.lockadmin")){
 			if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
 			return true;
 		} else {
