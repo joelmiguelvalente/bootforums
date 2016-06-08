@@ -42,11 +42,17 @@ Just download (Clone or download zip) and put in a directory for apache or nginx
 
 
 The following commands will work in most cases for creating the database folders for the forum:
+
 > sudo mkdir /var/forum_data/threads
+
 > sudo mkdir /var/forum_data/users
+
 > sudo chown -R www-data:www-data /var/forum_data/threads
+
 > sudo chown -R www-data:www-data /var/forum_data/users
+
 > sudo chmod 744 /var/forum_data/threads
+
 > sudo chmod 744 /var/forum_data/users
 
 
