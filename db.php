@@ -67,6 +67,7 @@ function update($post, $user, $time, $text, $index){
 	if(!file_exists("$usdata/$user.dat")){ return false; }
 	$post = clean($post);
 	$post = trim($post);
+	if(file_exists("$thdata/$post.lock") || file_exists("$thdata/$post.lockadmin")){ return false; }
 	$posts = new Fllat($post , $thdata);
 	if($posts -> canUpdatePost($index - 1, $user)){
 		$tmp = array("post"=>$text, "time" =>$time, "user"=>$user);
@@ -90,6 +91,7 @@ function addPost($topic, $post, $username){
 	if($topic === '' || $topic === null ){
 		return false;
 	}
+	if(file_exists("$thdata/$topic.lock") || file_exists("$thdata/$topic.lockadmin")){ return false; }
 	if(!file_exists("$thdata/$topic.name")){ file_put_contents("$thdata/$topic.name",htmlspecialchars($name)); }
 	$posts = new Fllat($topic , $thdata);
 	$date = date("Y-m-d h:i:sa");

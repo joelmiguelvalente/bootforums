@@ -206,7 +206,7 @@ if($_GET['type'] == "view"){
 		$pmd= Parsedown::instance()
    		->setMarkupEscaped(true) # escapes markup (HTML)
    		->text($pp['post']);
-   		if($pp['user'] == $_SESSION['username']){
+   		if($pp['user'] == $_SESSION['username'] && !file_exists("$thdata/$post_id.lock") && !file_exists("$thdata/$post_id.lockadmin")){
    			$edit = '<a href="./post.php?type=edit&post='.$post_id.'&reply_num='.$k.'">Edit Reply</a>';
    		} else {
    			$edit = "";
