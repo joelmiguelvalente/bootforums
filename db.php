@@ -154,6 +154,7 @@ function deletePost($thread, $user){
 }
 function isAdmin($user){
 	global $config;
+	if($config['admins'] == array(0=>"")){ return false; }
 	if(in_array($user, $config['admins'])){ return true; }else{return false;}
 }
 function clean($string) {

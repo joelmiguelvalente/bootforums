@@ -143,7 +143,7 @@ if($_GET['type'] == "view"){
 			<a href="post.php?type=reply&post=<?php echo $_GET['post']; ?>" class="btn btn-primary">Reply to post</a>
 			<?php
 		}
-		if(in_array($_SESSION['username'], $config['admins'])){
+		if(isAdmin($_SESSION['username'])){
 			if(!file_exists("$thdata/$post_id.lock") && !file_exists("$thdata/$post_id.lockadmin")){
 				echo '&nbsp;&nbsp;<a href="./submit.php?type=lock&post='.$post_id.'" class="btn btn-primary btn-sm">Lock Thread</a><br />';
 			} else {
@@ -161,15 +161,15 @@ if($_GET['type'] == "view"){
 	$canLock = $posts -> canUpdatePost(0, $_SESSION['username']);
 	if($canLock){
 		if(!file_exists("$thdata/$post_id.lock") && !file_exists("$thdata/$post_id.lockadmin")){
-			if(!in_array($_SESSION['username'], $config['admins'])){ echo '&nbsp;&nbsp;<a href="./submit.php?type=lock&post='.$post_id.'" class="btn btn-primary btn-sm">Lock Thread</a><br />'; }
+			if(!isAdmin($_SESSION['username'])){ echo '&nbsp;&nbsp;<a href="./submit.php?type=lock&post='.$post_id.'" class="btn btn-primary btn-sm">Lock Thread</a><br />'; }
 		} elseif(!file_exists("$thdata/$post_id.lockadmin")) {
-			if(!in_array($_SESSION['username'], $config['admins'])) {echo '&nbsp;&nbsp;<a href="./submit.php?type=unlock&post='.$post_id.'" class="btn btn-primary btn-sm">Unlock Thread</a><br />';}
+			if(!isAdmin($_SESSION['username'])) {echo '&nbsp;&nbsp;<a href="./submit.php?type=unlock&post='.$post_id.'" class="btn btn-primary btn-sm">Unlock Thread</a><br />';}
 		}
 	} else {
 		echo '<br />';
 	}
 	if(isAdmin($_SESSION['username'])){
-		echo '<a href="./submit.php?type=delete&post='.$post_id.'" class="btn btn-danger btn-sm">Delete Thread</a><br />';
+		echo '<br /><a href="./submit.php?type=delete&post='.$post_id.'" class="btn btn-danger btn-sm">Delete Thread</a><br />';
 	}
 	$page = ! empty( $_GET['page'] ) ? (int) $_GET['page'] : 1;
 	if($_GET['page'] == "first" || $_GET['page'] == "last"){
