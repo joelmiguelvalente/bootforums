@@ -26,7 +26,7 @@ if($_GET['type'] == "new"){
 		<input style="display: none;" name="type" id="type" value="new"></input>
 		<input class="form-control" name="post-id" id="post-id" placeholder="Enter Post Name here"></input><br />
 		<textarea name="text" id="text" rows="10" cols="100%" class="form-control"></textarea><br />
-		<button type="submit" class="btn btn-info lgn pull-right">Submit</button>
+		<button type="submit" class="btn btn-primary lgn pull-right">Submit</button>
 	</form>
 	<script type="text/javascript">
 
@@ -95,7 +95,7 @@ if($_GET['type'] == "edit"){
 			} else {
 				echo '<textarea name="text" id="text" rows="10" cols="100%" class="form-control">'.$temp_text.'</textarea><br />
 				<input style="display: none;" name="time" id="time" value="'.$temp_time.'"></input>
-				<button type="submit" class="btn btn-info pull-right">Submit</button>
+				<button type="submit" class="btn btn-primary pull-right">Submit</button>
 				';
 			}
 		?>
