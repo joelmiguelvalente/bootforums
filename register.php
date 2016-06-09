@@ -4,7 +4,13 @@ require("db.php");
 require("config.php");
 require("simple-php-captcha.php");
 require("functions.php");
-
+if($config['ssl'] == true){
+	if($_SERVER["HTTPS"] != "on")
+	{
+    	header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    	die();
+	}
+}
 $_SESSION['captcha'] = simple_php_captcha( $config['captcha']);
 //Begin page
 include("header.php");
