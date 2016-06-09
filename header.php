@@ -1,5 +1,5 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		<title><?php echo $config['title']; ?></title>
 		<meta charset="utf-8">
@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="<?php echo $config['desc']; ?>">
 		<meta name="author" content="">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/<?php echo themeSelector(); ?>" rel="stylesheet">
 		<link href="css/bootstrapvalidator.min.css" rel="stylesheet">
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>

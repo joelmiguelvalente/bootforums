@@ -2,6 +2,7 @@
 session_start();
 require("db.php");
 require("config.php");
+require("functions.php");
 //Force SSL if config says so.
 if($config['ssl'] == true){
 	if($_SERVER["HTTPS"] != "on")

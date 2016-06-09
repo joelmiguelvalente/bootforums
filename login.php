@@ -3,6 +3,7 @@ session_start();
 require("db.php");
 require("config.php");
 require("simple-php-captcha.php");
+require("functions.php");
 //Begin page
 include("header.php");
 $_SESSION['captcha'] = simple_php_captcha( $config['captchaLogin']);

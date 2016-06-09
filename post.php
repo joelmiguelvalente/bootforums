@@ -3,6 +3,7 @@ session_start();
 require("db.php");
 require("config.php");
 include("Parsedown.php");
+require("functions.php");
 //Begin page
 if($config['ssl'] == true){
 	if($_SERVER["HTTPS"] != "on")
