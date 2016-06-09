@@ -39,9 +39,9 @@ echo '<div class="container">';
 	<button type="submit" class="btn btn-primary pull-right">Submit</button>
 	
 </form>
-
+</div>
 
 <?php
-
+include("footer.php");
 
 ?>

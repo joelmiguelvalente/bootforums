@@ -50,7 +50,7 @@ if($_GET['type'] == "reply"){
 		<input style="display: none;" name="type" id="type" value="reply"></input>
 		<input style="display: none;" name="post-id" id="post-id" value="<?php echo $_GET['post']; ?>"></input>
 		<textarea name="text" id="text" rows="10" cols="100%" class="form-control"></textarea><br />
-		<button type="submit" class="btn btn-info pull-right">Submit</button>
+		<button type="submit" class="btn btn-primary pull-right">Submit</button>
 	</form>
 <script type="text/javascript">
 
