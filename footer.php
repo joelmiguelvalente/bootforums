@@ -15,21 +15,18 @@ require("config.php");
 ?>
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
 <div class="container">
-  <div class="container-fluid">
-    <br /><p class="text-center" style="color:white"><?php echo $config['copyright']; ?></p>
-    <p><?php echo $config['footer']; ?></p>
-  </div>
+	<div class="row">
+		<hr></hr>
+		<div class="col-md-6">
+			<div class="text-left"><?php echo $config['copyright']; ?></a></div>
+		</div>
+		<div class="col-md-6">
+			<div class="text-right"><?php echo $config['footer']; ?></div>			</div>
+		<br />
+		<br />
+	</div>
 </div>
-</nav>
-
 	</body>
 </html>
