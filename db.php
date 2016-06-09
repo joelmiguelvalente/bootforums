@@ -60,6 +60,11 @@ function changePasswd($username, $currPass, $newPass1, $newPass2){
 	if(!$pass) { return "Current Password Mismatch"; }
 	$cc_temp = array("username"=>$username, "password"=>password_hash($newPass1, PASSWORD_BCRYPT, $options));
 	$tmp = $users -> update($index, $cc_temp);
+	if($tmp){
+		$tmp = "Password changed successfully!";
+	} else {
+		$tmp = "There was an error changing your password, please contact the web master.";
+	}
 	return $tmp;
 }
 function update($post, $user, $time, $text, $index){

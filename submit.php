@@ -105,7 +105,7 @@ switch($type){
 		if($msg == false){
 			$msg = "There was an error updating the password, please try again.";
 		}
-		if($msg !== false){
+		if($msg === true){
 			$msg = "Password has changed successfully!";
 		}
 		header("Location: ./change.php?msg=$msg");
