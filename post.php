@@ -93,16 +93,18 @@ if($_GET['type'] == "edit"){
 			$p = $posts -> select();
 			$temp_time = "";
 			$temp_text = "";
+			$canEdit = false;
 			foreach($p as $pp){
 				$k = array_search($pp, $p);
 				$k++;
 				if($pp['user'] == $_SESSION['username'] && $k == $_GET['reply_num']){
+					$canEdit = true;
 					$temp_text = $pp['post'];
 					$temp_time = $pp['time'];
 					break;
 				}
 			}
-			if($temp_text == "" || $temp_text == null){
+			if($canEdit === false){
 				echo 'You do not have permission to edit this reply! Please contact the web master.';
 			} else {
 				echo '<textarea name="text" id="text" rows="10" cols="100%" class="form-control">'.$temp_text.'</textarea><br />
@@ -172,6 +174,10 @@ if($_GET['type'] == "view"){
 		echo '<br /><a href="./submit.php?type=delete&post='.$post_id.'" class="btn btn-danger btn-sm">Delete Thread</a><br />';
 	}
 	$page = ! empty( $_GET['page'] ) ? (int) $_GET['page'] : 1;
+	
+	if($_GET['page'] == 'first') $page = 1;
+	elseif($_GET['page'] == 'last') $page = count($p);
+	/*
 	if($_GET['page'] == "first" || $_GET['page'] == "last"){
 		$page = $_GET['page'];
 		if($page == "first"){
@@ -181,6 +187,8 @@ if($_GET['type'] == "view"){
 			$page = count($p);
 		}
 	}
+	*/
+	
 	$total = count( $p ); //total items in array    
 	$limit = $config['perPageThread']; //per page    
 	$totalPages = ceil( $total/ $limit ); //calculate total pages
@@ -203,7 +211,7 @@ if($_GET['type'] == "view"){
 	foreach($p as $pp){
 		$k = array_search($pp, $p);
 		$k++;
-		$pmd= Parsedown::instance()
+		$pmd = Parsedown::instance()
    		->setMarkupEscaped(true) # escapes markup (HTML)
    		->text($pp['post']);
    		if($pp['user'] == $_SESSION['username'] && !file_exists("$thdata/$post_id.lock") && !file_exists("$thdata/$post_id.lockadmin")){

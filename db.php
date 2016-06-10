@@ -72,6 +72,7 @@ function update($post, $user, $time, $text, $index){
 	if(!file_exists("$usdata/$user.dat")){ return false; }
 	$post = clean($post);
 	$post = trim($post);
+	if($text == ""){ return false; }
 	if(file_exists("$thdata/$post.lock") || file_exists("$thdata/$post.lockadmin")){ return false; }
 	$posts = new Fllat($post , $thdata);
 	if($posts -> canUpdatePost($index - 1, $user)){
