@@ -94,9 +94,10 @@ function addPost($topic, $post, $username){
 	$name = $topic;
 	$topic = clean($topic);
 	$topic = trim($topic);
-	if($topic === '' || $topic === null ){
+	if($topic === '' || $topic === null || $post === ''){
 		return false;
 	}
+	
 	if(file_exists("$thdata/$topic.lock") || file_exists("$thdata/$topic.lockadmin")){ return false; }
 	if(!file_exists("$thdata/$topic.name")){ file_put_contents("$thdata/$topic.name",htmlspecialchars($name)); }
 	$posts = new Fllat($topic , $thdata);
