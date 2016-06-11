@@ -32,6 +32,9 @@ function auth($username, $password){
 function adduser($username, $password, $email){
 	global $usdata, $thdata;
 	$username = clean($username);
+	if(strlen($username) > 12){
+		$username = substr($username, 0, 12);
+	}
 	$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
 	$options = array('cost' => 11,'salt'=> $salt);
 	$pass = password_hash($password, PASSWORD_BCRYPT, $options);

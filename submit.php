@@ -55,9 +55,13 @@ switch($type){
 		if($config['registration'] == false){
 			header("Location: ./register.php?msg=Registration is disabled! You cannot register, even when you want to be sneaky."); die();
 		}
-		$msg = adduser($_POST['user'], $_POST['pass']);
+		$u = clean($_POST['user']);
+		if(strlen($u) > 12){
+			$u = substr($u, 0, 12);
+		}
+		$msg = adduser($u, $_POST['pass']);
 		if(!$msg){ header("Location: ./register.php?msg=Registration failed!"); die(); }
-		header("Location: ./login.php?msg=Login to continue registration, ".clean($_POST['user']));
+		header("Location: ./login.php?msg=Login to continue registration, ".$u);
 		die();
 		break;
 	case "login":

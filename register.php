@@ -38,7 +38,7 @@ if($config['registration'] == true){
 	<input type="hidden" name="type" id="type" value="reg" />
 	<div class="form-group">
     <label for="user">Username:</label>
-    <input type="username" class="form-control" id="user" name="user">
+    <input type="username" class="form-control" id="user" name="user" maxlength="12">
   </div>
   <div class="form-group">
     <label for="pass">Password:</label>
