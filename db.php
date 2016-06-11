@@ -92,8 +92,12 @@ function addPost($topic, $post, $username){
 	$username = clean($username);
 	if(!file_exists("$usdata/$username.dat")){ return false; }
 	$name = $topic;
+	if(strlen($topic) > 40){
+		$topic = substr($topic, 0, 40);
+	}
 	$topic = clean($topic);
 	$topic = trim($topic);
+	
 	if($topic === '' || $topic === null || $post === ''){
 		return false;
 	}
@@ -171,6 +175,9 @@ function clean($string) {
    	$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
 	$string = str_replace('.','', $string); //Replace '.' with nothing.
 	$string = strtolower($string); //Lower case it so that everything is VERY clean
+	if(strlen($string) > 40){
+		$string = substr($string, 0, 40);
+	}
    	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }
 
