@@ -91,22 +91,5 @@ include("footer.php");
 
 
 
-//Misc functions
-function scan_dir($dir) {
-    $ignored = array('.', '..', '.svn', '.htaccess');
 
-    $files = array();    
-    foreach (scandir($dir) as $file) {
-        if (in_array($file, $ignored)) continue;
-        if(strpos($file,".name")) continue;
-        if(strpos($file,".lock")) continue;
-        if(strpos($file,".lockadmin")) continue;
-        $files[$file] = filemtime($dir . '/' . $file);
-    }
-
-    arsort($files);
-    $files = array_keys($files);
-
-    return ($files) ? $files : false;
-}
 ?>

@@ -53,6 +53,7 @@ finds this PHP script as useful as I do."
 				echo '';
 				?>
             	<ul class="nav navbar-nav pull-right">
+            		<li><form action="search.php" method="GET"><input type="text" class="form-control" name="search" id="search" placeholder="Search..."></form></li>
 					<li><a href="change.php">Change Password</a></li>
 					<li><a href="logout.php">Logout <?php echo $_SESSION['username'];?></a></li>
 				</ul>
