@@ -26,6 +26,10 @@ finds this PHP script as useful as I do."
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/bootstrapvalidator.min.js"></script>
+		<script src="js/tinymce/tinymce.min.js"></script>
+  		<script>
+  			//tinymce.init({ selector:'textarea' });
+  		</script>
 	</head>
 	
 	<body>
