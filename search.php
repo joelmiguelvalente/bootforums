@@ -38,7 +38,7 @@ if(strpos($search, " ")){
 	foreach($search as $sr){
 		$sr = clean($sr);
 		foreach($files1 as $flsr){
-			if(strpos($flsr, $sr)){
+			if(strpos($flsr, $sr) !== false){
 				if(!in_array($flsr, $finalAr)){
 					array_push($finalAr, $flsr);
 					$find = true;
@@ -49,7 +49,7 @@ if(strpos($search, " ")){
 } else {
 	foreach($files1 as $flsr){
 		$search = clean($search);
-			if(strpos($flsr, $search)){
+			if(strpos($flsr, $search) !== false){
 				array_push($finalAr, $flsr);
 				$find = true;
 			}
