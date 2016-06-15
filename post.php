@@ -15,6 +15,7 @@ session_start();
 require("db.php");
 require("config.php");
 include("Parsedown.php");
+include("ParsedownExtra.php"); //Might use ParsedownExtra down the road, who knows.
 require("functions.php");
 //Begin page
 if($config['ssl'] == true){
