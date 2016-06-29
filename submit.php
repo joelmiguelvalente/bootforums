@@ -59,6 +59,10 @@ switch($type){
 		if(strlen($u) > 12){
 			$u = substr($u, 0, 12);
 		}
+		if(strlen($u) < 3){
+			header("Location: ./login.php?msg=Username must be at least 3 characters long!");
+			die();
+		}
 		$msg = adduser($u, $_POST['pass']);
 		if(!$msg){ header("Location: ./register.php?msg=Registration failed!"); die(); }
 		header("Location: ./login.php?msg=Login to continue registration, ".$u);
@@ -113,6 +117,8 @@ switch($type){
 			$msg = "Password has changed successfully!";
 		}
 		header("Location: ./change.php?msg=$msg");
+		die();
+		break;
 }
 function isNotEmpty($input) 
 {
