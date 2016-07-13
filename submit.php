@@ -59,8 +59,8 @@ switch($type){
 		if(strlen($u) > 12){
 			$u = substr($u, 0, 12);
 		}
-		if(strlen($u) < 3){
-			header("Location: ./login.php?msg=Username must be at least 3 characters long!");
+		if(strlen($u) <= 3){
+			header("Location: ./register.php?msg=Username must be at least 3 characters long!");
 			die();
 		}
 		$msg = adduser($u, $_POST['pass']);
