@@ -26,6 +26,8 @@ echo '<div class="container">';
   <h1>Log In</h1>
 </div>
 <?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="login" />
 	<div class="form-group">
@@ -49,6 +51,8 @@ echo '<div class="container">';
   	?>
   <button type="submit" class="btn btn-primary pull-right">Submit</button>
 </form>
+</div>
+</div>
 <?php
 echo '</div>';
 include("footer.php");

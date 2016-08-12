@@ -33,24 +33,28 @@ echo '<div class="container">';
   <h1>Change Current Password</h1>
 </div>
 <?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
-<form action="submit.php" method="POST">
-	<input type="hidden" name="type" id="type" value="passwd">
-	<div class="form-group">
-	    <label for="user">Current Password:</label>
-	    <input type="password" class="form-control" id="currPass" name="currPass">
-  	</div>
-  	<br />
-  	<div class="form-group">
-	    <label for="pass">New Password:</label>
-	    <input type="password" class="form-control" id="pass1" name="pass1">
-  	</div>
-	<div class="form-group">
-	    <label for="pass">Verify Password:</label>
-	    <input type="password" class="form-control" id="pass2" name="pass2">
-  	</div>
-	<button type="submit" class="btn btn-primary pull-right">Submit</button>
-	
-</form>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form action="submit.php" method="POST">
+			<input type="hidden" name="type" id="type" value="passwd">
+			<div class="form-group">
+	    		<label for="user">Current Password:</label>
+	    		<input type="password" class="form-control" id="currPass" name="currPass">
+  			</div>
+  			<br />
+  			<div class="form-group">
+	    		<label for="pass">New Password:</label>
+	    		<input type="password" class="form-control" id="pass1" name="pass1">
+  			</div>
+			<div class="form-group">
+	    		<label for="pass">Verify Password:</label>
+	    		<input type="password" class="form-control" id="pass2" name="pass2">
+  			</div>
+			<button type="submit" class="btn btn-primary pull-right">Submit</button>
+			
+		</form>
+	</div>
+</div>
 </div>
 
 <?php
