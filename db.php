@@ -15,22 +15,25 @@ require "fllat.php";
 require "config.php";
 $usdata = $config['user_data'];
 $thdata = $config['thread_data'];
+$log_file = $config['log'];
 
 function auth($username, $password){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	$username = clean($username);
 	if(!file_exists("$usdata/$username.dat")){ return false; }
 	$users = new Fllat($username, $usdata);
 	$pass = $users -> get("password", "username", $username);
 	if(password_verify($password, $pass)){
+		write_log("[AUTH] $username has logged in successfully.", $log_file);
 		return true;
 	} else {
+		write_log("[AUTH] $username attemped login with password '$password': failed.", $log_file);
 		return false;
 	}
 }
 
 function adduser($username, $password, $email){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	$username = clean($username);
 	if(strlen($username) > 12){
 		$username = substr($username, 0, 12);
@@ -45,11 +48,11 @@ function adduser($username, $password, $email){
 	$de = $users -> get("username", "username", $username);
 	if($de){ return false; }
 	$tmp = $users -> add(array("username"=>$username, "password"=>$pass));
-	if(!$tmp){ $tmp = "Please login to continue registration:";}
+	if(!$tmp){ $tmp = "Please login to continue registration:"; write_log("[REG] $username was registered.", $log_file);}
 	return $tmp;
 }
 function changePasswd($username, $currPass, $newPass1, $newPass2){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	$username = clean($username);
 	if($newPass1 != $newPass2){
 		return "The new password does not match verification, please try again!";
@@ -63,18 +66,20 @@ function changePasswd($username, $currPass, $newPass1, $newPass2){
 	if($index === null && !$index >= 0){ return "Could not find a password?"; }
 	$canChange = $users ->get("password","username", $username);
 	$pass = password_verify($currPass, $canChange);
-	if(!$pass) { return "Current Password Mismatch"; }
+	if(!$pass) {write_log("[PAS] $username attempted to change password, But failed.", $log_file); return "Current Password Mismatch"; }
 	$cc_temp = array("username"=>$username, "password"=>password_hash($newPass1, PASSWORD_BCRYPT, $options));
 	$tmp = $users -> update($index, $cc_temp);
 	if($tmp){
+		write_log("[PAS] $username successfully changed password.", $log_file);
 		$tmp = "Password changed successfully!";
 	} else {
+		write_log("[PAS] Unknown error while changing password for $username. Please confirm with apache/httpd/nginx logs.", $log_file);
 		$tmp = "There was an error changing your password, please contact the web master.";
 	}
 	return $tmp;
 }
 function update($post, $user, $time, $text, $index){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	if(!file_exists("$usdata/$user.dat")){ return false; }
 	$post = clean($post);
 	$post = trim($post);
@@ -92,7 +97,7 @@ function update($post, $user, $time, $text, $index){
 
 }
 function addPost($topic, $post, $username){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	//Make topic readable to file system:
 	//Convert special chars. and spaces to "_"
 	$username = clean($username);
@@ -117,7 +122,7 @@ function addPost($topic, $post, $username){
 	return true;
 }
 function lock($thread, $user){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	$user = clean($user);
 	$thread = clean($thread);
 	if(file_exists("$thdata/$thread.dat")){
@@ -138,7 +143,7 @@ function lock($thread, $user){
 	}
 }
 function unlock($thread, $user){
-	global $usdata, $thdata;
+	global $usdata, $thdata, $log_file;
 	$user = clean($user);
 	$thread = clean($thread);
 	if(file_exists("$thdata/$thread.dat")){
@@ -161,7 +166,7 @@ function unlock($thread, $user){
 	
 }
 function deletePost($thread, $user){
-	global $thdata;
+	global $thdata, $log_file;
 	if(isAdmin($user)){
 		if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
 		if(file_exists("$thdata/$thread.lockadmin")){unlink("$thdata/$thread.lockadmin");}
@@ -186,5 +191,50 @@ function clean($string) {
 	}
    	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }
-
+function write_log($message, $logfile='') {
+  // Determine log file
+  if($logfile == '') {
+    // checking if the constant for the log file is defined
+    if (defined(DEFAULT_LOG) == TRUE) {
+        $logfile = DEFAULT_LOG;
+    }
+    // the constant is not defined and there is no log file given as input
+    else {
+        error_log('No log file defined!',0);
+        return array(status => false, message => 'No log file defined!');
+    }
+  }
+ 
+  // Get time of request
+  if( ($time = $_SERVER['REQUEST_TIME']) == '') {
+    $time = time();
+  }
+ 
+  // Get IP address
+  if( ($remote_addr = $_SERVER['REMOTE_ADDR']) == '') {
+    $remote_addr = "REMOTE_ADDR_UNKNOWN";
+  }
+ 
+  // Get requested script
+  if( ($request_uri = $_SERVER['REQUEST_URI']) == '') {
+    $request_uri = "REQUEST_URI_UNKNOWN";
+  }
+ 
+  // Format the date and time
+  $date = date("Y-m-d H:i:s", $time);
+ 
+  // Append to the log file
+  if($fd = @fopen($logfile, "a")) {
+    $result = fputcsv($fd, array($date, $remote_addr, $request_uri, $message));
+    fclose($fd);
+ 
+    if($result > 0)
+      return array(status => true);  
+    else
+      return array(status => false, message => 'Unable to write to '.$logfile.'!');
+  }
+  else {
+    return array(status => false, message => 'Unable to open log '.$logfile.'!');
+  }
+}
 ?>
