@@ -48,7 +48,7 @@ finds this PHP script as useful as I do."
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             	<ul class="nav navbar-nav">
-					<li><a href="./">Home</a></li>
+					<li><a href="<?php echo $config['home']; ?>">Home</a></li>
 					<li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Register</a></li>
 					<li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Log in</a></li>
 				</ul>
