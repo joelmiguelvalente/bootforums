@@ -102,9 +102,9 @@ function addPost($topic, $post, $username){
 	//Convert special chars. and spaces to "_"
 	$username = clean($username);
 	if(!file_exists("$usdata/$username.dat")){ return false; }
-	$name = $topic;
+	$name = clean60($topic);
 	if(strlen($topic) > 40){
-		$topic = substr($topic, 0, 40);
+		//$topic = substr($topic, 0, 40);
 	}
 	$topic = clean($topic);
 	$topic = trim($topic);
@@ -190,6 +190,12 @@ function clean($string) {
 		$string = substr($string, 0, 40);
 	}
    	return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+}
+function clean60($string) {
+	if(strlen($string) > 60){
+		$string = substr($string, 0, 60);
+	}
+   	return $string; //preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 }
 function write_log($message, $logfile='') {
   // Determine log file

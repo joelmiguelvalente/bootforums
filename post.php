@@ -37,7 +37,7 @@ if($_GET['type'] == "new"){
 	</div>
 	<form action="submit.php" method="POST" id="new" role="form">
 		<input style="display: none;" name="type" id="type" value="new"></input>
-		<input class="form-control" name="post-id" id="post-id" placeholder="Enter Post Name here" maxlength="40"></input><br />
+		<input class="form-control" name="post-id" id="post-id" placeholder="Enter Post Name here (60 Char. Max)" maxlength="60"></input><br />
 		<textarea name="text" id="text" rows="10" cols="100%" class="form-control"></textarea><br />
 		<button type="submit" class="btn btn-primary lgn pull-right">Submit</button>
 	</form>
