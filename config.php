@@ -16,7 +16,6 @@ Script is distributed with Open Source Licenses, do what you want with it. ;)
 finds this PHP script as useful as I do."
 
 */
-require '../_config.php';
 $config = array(
 	"admins" => array(""), //Username(s) of the account you want to be admin(**Register this account FIRST) This user will have access to locking threads, or deleting them even if they do not own it. Leave as just "" for no admin accounts.
 	"title"=>"BootForums", //Title for the forums
