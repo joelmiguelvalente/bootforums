@@ -12,7 +12,6 @@ Script is distributed with Open Source Licenses, do what you want with it. ;)
 finds this PHP script as useful as I do."
 
 */
-require("config.php");
 function themeSelector(){
 	global $config;
 	

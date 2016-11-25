@@ -12,7 +12,6 @@ finds this PHP script as useful as I do."
 
 */
 require "fllat.php";
-require "config.php";
 $usdata = $config['user_data'];
 $thdata = $config['thread_data'];
 $log_file = $config['log'];
