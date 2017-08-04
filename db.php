@@ -12,6 +12,7 @@ finds this PHP script as useful as I do."
 
 */
 require "fllat.php";
+require "config.php";
 $usdata = $config['user_data'];
 $thdata = $config['thread_data'];
 $log_file = $config['log'];
@@ -31,7 +32,7 @@ function auth($username, $password){
 	}
 }
 
-function adduser($username, $password, $email){
+function adduser($username, $password){
 	global $usdata, $thdata, $log_file;
 	$username = clean($username);
 	if(strlen($username) > 12){
