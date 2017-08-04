@@ -35,6 +35,7 @@ if($_GET['type'] == "new"){
 	<div class="page-header">
 	  	<h1>New Post</h1>
 	</div>
+	<p>You may use <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> in the text area.</p>
 	<form action="submit.php" method="POST" id="new" role="form">
 		<input style="display: none;" name="type" id="type" value="new"></input>
 		<input class="form-control" name="post-id" id="post-id" placeholder="Enter Post Name here (60 Char. Max)" maxlength="60"></input><br />
