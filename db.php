@@ -80,6 +80,7 @@ function changePasswd($username, $currPass, $newPass1, $newPass2){
 }
 function update($post, $user, $time, $text, $index){
 	global $usdata, $thdata, $log_file;
+	$user = clean($user);
 	if(!file_exists("$usdata/$user.dat")){ return false; }
 	$post = clean($post);
 	$post = trim($post);
@@ -167,6 +168,7 @@ function unlock($thread, $user){
 }
 function deletePost($thread, $user){
 	global $thdata, $log_file;
+	$user = clean($user);
 	if(isAdmin($user)){
 		if(file_exists("$thdata/$thread.lock")){unlink("$thdata/$thread.lock");}
 		if(file_exists("$thdata/$thread.lockadmin")){unlink("$thdata/$thread.lockadmin");}
