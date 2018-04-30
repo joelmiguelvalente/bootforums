@@ -223,7 +223,7 @@ if($_GET['type'] == "view"){
    		}
 		echo '<div class="panel panel-default">
   				<div class="panel-heading"><b>'.$pp['user'].'</b> @ '.$pp['time'].'&nbsp;&nbsp;'.$edit.'<span class="pull-right">#'.$k.'</span></div>
-  				<div class="panel-body">'.$pmd.'</div>
+  				<div class="panel-body" style="overflow:auto;">'.$pmd.'</div>
 			</div>';
 	}
 	echo '<ul class="pagination">';
