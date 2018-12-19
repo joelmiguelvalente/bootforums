@@ -14,26 +14,39 @@ finds this PHP script as useful as I do."
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title><?php echo $config['title']; ?></title>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="<?php echo $config['desc']; ?>">
-		<meta name="author" content="">
-		<link href="css/<?php echo themeSelector(); ?>" rel="stylesheet">
-		<link href="css/bootstrapvalidator.min.css" rel="stylesheet">
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/bootstrapvalidator.min.js"></script>
-		<script src="js/tinymce/tinymce.min.js"></script>
-  		<script>
-  			//tinymce.init({ selector:'textarea' });
-  		</script>
-	</head>
-	
-	<body>
-		<nav class="navbar navbar-default" role="navigation">
+    <head>
+        <title><?php echo $config['title']; ?></title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="<?php echo $config['desc']; ?>">
+        <meta name="author" content="">
+        <link href="css/<?php echo themeSelector(); ?>" rel="stylesheet">
+        <link href="css/bootstrapvalidator.min.css" rel="stylesheet">
+        <link href="css/simplemde.min.css" rel="stylesheet">
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrapvalidator.min.js"></script>
+        <script src="js/tinymce/tinymce.min.js"></script>
+        <script src="js/simplemde.min.js"></script>
+        <script>
+        $(document).ready(function(){
+            var simplemde = new SimpleMDE({
+                status: true,
+                toolbarTips: true,
+                toolbarGuideIcon: true,
+                autofocus: true,
+                lineWrapping: true,
+                indentWithTabs: true,
+                spellChecker: false,
+                toolbar: [<?= $config["wysiwygButtons"] ?>]
+            })
+        })
+    		</script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -47,23 +60,22 @@ finds this PHP script as useful as I do."
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            	<ul class="nav navbar-nav">
-					<li><a href="<?php echo $config['home']; ?>">Home</a></li>
-					<li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Register</a></li>
-					<li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Log in</a></li>
-				</ul>
-									<?php
-			if($_SESSION['username']){
-				echo '';
-				?>
-            	<ul class="nav navbar-nav pull-right">
-            		<li><form action="search.php" method="GET"><input type="text" class="form-control" name="search" id="search" placeholder="Search..."></form></li>
-					<li><a href="change.php">Change Password</a></li>
-					<li><a href="logout.php">Logout <?php echo $_SESSION['username'];?></a></li>
-				</ul>
-				<?php
-			}	
-		?>
-			</div>
- 		</nav>
-
+                <ul class="nav navbar-nav">
+                    <li><a href="<?php echo $config['home']; ?>">Home</a></li>
+                    <li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Register</a></li>
+                    <li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Log in</a></li>
+                </ul>
+                                    <?php
+            if($_SESSION['username']){
+                echo '';
+                ?>
+                <ul class="nav navbar-nav pull-right">
+                    <li><form action="search.php" method="GET"><input type="text" class="form-control" name="search" id="search" placeholder="Search..."></form></li>
+                    <li><a href="change.php">Change Password</a></li>
+                    <li><a href="logout.php">Logout <?php echo $_SESSION['username'];?></a></li>
+                </ul>
+                <?php
+            }
+        ?>
+            </div>
+        </nav>
