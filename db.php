@@ -41,7 +41,7 @@ function adduser($username, $password){
 	if(strlen($username) <= 3){
 		return "Username must be at least 4 characters long!";
 	}
-	$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+	$salt = random_bytes(22);
 	$options = array('cost' => 11,'salt'=> $salt);
 	$pass = password_hash($password, PASSWORD_BCRYPT, $options);
 	$users = new Fllat($username, $usdata);
