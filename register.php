@@ -29,7 +29,7 @@ include("header.php");
 echo '<div class="container">';
 //Body content
 echo '<div class="page-header">
-  <h1>Registration</h1>
+  <h1>'.L("registration").'</h1>
 </div>';
 if($config['registration'] == true){
 ?>
@@ -37,23 +37,23 @@ if($config['registration'] == true){
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="reg" />
 	<div class="form-group">
-    <label for="user">Username:</label>
+    <label for="user"><?= L("username") ?>:</label>
     <input type="username" class="form-control" id="user" name="user" maxlength="12">
   </div>
   <div class="form-group">
-    <label for="pass">Password:</label>
+    <label for="pass"><?= L("password") ?>:</label>
     <input type="password" class="form-control" id="pass" name="pass">
   </div>
   <div class="form-group">
-  	<label for="cap">Captcha Request:</label><br />
+  	<label for="cap"><?= L("captcha.request") ?>:</label><br />
   	<img src="<?php echo $_SESSION['captcha']['image_src']; ?>">&nbsp;&nbsp;<input type="text" name="cap" id="cap" rows="8">
   </div>
-  <button type="submit" class="btn btn-primary pull-right">Submit</button>
-  
+  <button type="submit" class="btn btn-primary pull-right"><?= L("submit") ?></button>
+
 </form>
 <?php
 } else {
-	echo "<p>Registration is currently disabled by the site administrator. If you think you got this in error, please contact the web master.</p>";
+	echo "<p>".L("registration.disabled")."</p>";
 }
 
 echo '</div>';

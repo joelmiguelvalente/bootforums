@@ -12,9 +12,9 @@ finds this PHP script as useful as I do."
 
 */
 session_start();
-require("db.php");
 require("config.php");
 require("functions.php");
+require("db.php");
 //Force SSL if config says so.
 if($config['ssl'] == true){
 	if($_SERVER["HTTPS"] != "on")
@@ -32,22 +32,22 @@ if($config['announce'] !== ""){
 	echo '<div class="alert alert-info">'.$config['announce'].'</div>';
 }
 if($_SESSION['username'] && $config['allowNewThreads'] !== false){
-	echo '<a href="post.php?type=new" class="btn btn-primary">New Post</a><br />';
+	echo '<a href="post.php?type=new" class="btn btn-primary">'.L("new.post").'</a><br />';
 }
 if(!$config['allowNewThreads']){
-	echo '<div class="alert alert-warning">New thread creation has been locked by the Forum Administrator.</div>';
+	echo '<div class="alert alert-warning">'.L("new.thread.locked").'</div>';
 }
 if(isAdmin($_SESSION['username']) && $config['allowNewThreads'] === false){
-	echo '<a href="post.php?type=new" class="btn btn-primary">New Post</a><br />';
+	echo '<a href="post.php?type=new" class="btn btn-primary">'.L("new.post").'</a><br />';
 }
 ?>
 <div class="page-header">
-  <h1>Latest Posts</h1>
+  <h1><?= L("latest.posts") ?></h1>
 </div>
 <table class="table">
 	<thead>
-		<th>Post</th>
-		<th>Last Updated</th>
+		<th><?= L("post") ?></th>
+		<th><?= L("last.updated") ?></th>
 	</thead>
 	<tbody>
 <?php
@@ -68,7 +68,7 @@ if($files1){
           if($file != ".." && $file != "."){
               $file = str_replace(".dat", "", $file);
               $name = file_get_contents("$data/$file.name");
-              echo '<tr><td><a href="post.php?page=1&type=view&post='.$file.'">'.$name.'</a> | <a style="font-size:9px;" href="post.php?page=last&type=view&post='.$file.'">Jump to last</a></td><td>'.date("Y-m-d h:i:sA",filemtime("$data/$file.dat")).'</td></tr>';
+              echo '<tr><td><a href="post.php?page=1&type=view&post='.$file.'">'.$name.'</a> | <a style="font-size:9px;" href="post.php?page=last&type=view&post='.$file.'">'.L("jump.to.last").'</a></td><td>'.date("Y-m-d h:i:sA",filemtime("$data/$file.dat")).'</td></tr>';
           }
       }
   }
@@ -80,7 +80,7 @@ if($files1){
 
 <?php
 echo '<ul class="pagination">';
-echo '<li><a href="./?page=1">First</a></li>';
+echo '<li><a href="./?page=1">'.L("first").'</a></li>';
 for($i = 1; $i <= $totalPages; $i++){
 	if($i == $page){
 		echo '<li class="active"><a href="./?page='.$i.'">'.$i.'</a></li>';
@@ -88,12 +88,10 @@ for($i = 1; $i <= $totalPages; $i++){
 		echo '<li><a href="./?page='.$i.'">'.$i.'</a></li>';
 	}
 }
-echo '<li><a href="./?page='.$totalPages.'">Last</a></li>';
+echo '<li><a href="./?page='.$totalPages.'">'.L("last").'</a></li>';
 echo "</ul>";
 echo '</div>';
 include("footer.php");
-
-
 
 
 ?>

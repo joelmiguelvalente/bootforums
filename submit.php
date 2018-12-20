@@ -24,20 +24,20 @@ if($_GET['type']){
 
 
 switch($type){
-	
+
 	case "reply":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
-			die("Invalid name detected, please try again!");
+			die(L("error.invalid.name"));
 		}
 		addPost($_POST['post-id'], $_POST['text'], $_SESSION['username']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_POST['post-id']));
 		die();
 		break;
 	case "new":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
-			die("Invalid name detected, please try again!");
+			die(L("error.invalid.name"));
 		}
 		if(!$config['allowNewThreads'] && !in_array($_SESSION['username'], $config['admins'])){
 			header("Location: ./");
@@ -53,74 +53,74 @@ switch($type){
 			header("Location: ./register.php?msg=Captcha invalid!"); die();
 		}
 		if($config['registration'] == false){
-			header("Location: ./register.php?msg=Registration is disabled! You cannot register, even when you want to be sneaky."); die();
+			header("Location: ./register.php?msg=".L("error.registration.disabled")); die();
 		}
 		$u = clean($_POST['user']);
 		if(strlen($u) > 12){
 			$u = substr($u, 0, 12);
 		}
 		if(strlen($u) <= 3){
-			header("Location: ./register.php?msg=Username must be at least 3 characters long!");
+			header("Location: ./register.php?msg=".L("error.least.3"));
 			die();
 		}
 		$msg = adduser($u, $_POST['pass']);
-		if(!$msg){ header("Location: ./register.php?msg=Registration failed!"); die(); }
-		header("Location: ./login.php?msg=Login to continue registration, ".$u);
+		if(!$msg){ header("Location: ./register.php?msg=".L("error.registration.failed")); die(); }
+		header("Location: ./login.php?msg=".L("login.to.continue.registration").$u);
 		die();
 		break;
 	case "login":
 		if($_POST['cap'] != $_SESSION['captcha']['code'] && $config['captchaLoginForce'] === true){
-			header("Location: ./login.php?msg=Captcha invalid!"); die();
+			header("Location: ./login.php?msg=".L("error.captcha.invalid")); die();
 		}
 		$msg = auth($_POST['user'], $_POST['pass']);
 		if(!$msg){
-			header("Location: ./login.php?msg=Incorrect username or password");
+			header("Location: ./login.php?msg=".L("error.incorrect.userorpass"));
 			die();
 		}
 		$_SESSION['username'] = $_POST['user'];
 		header("Location: ./");
 		die();
 	case "edit":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		if(clean($_POST['post-id']) == "" || clean($_POST['post-id']) == "-" || !isNotEmpty(clean($_POST['post-id']))){
-			die("Invalid name detected, please try again!");
+			die(L("error.invalid.name"));
 		}
 		update($_POST['post-id'], $_SESSION['username'], $_POST['time'], $_POST['text'], $_POST['reply_num']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_POST['post-id']));
 		die();
 		break;
 	case "lock":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		lock($_GET['post'], $_SESSION['username']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_GET['post']));
 		die();
 		break;
 	case "unlock":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		unlock($_GET['post'], $_SESSION['username']);
 		header("Location: ./post.php?page=last&type=view&post=".clean($_GET['post']));
 		die();
 		break;
 	case "delete":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		deletePost($_GET['post'], $_SESSION['username']);
 		header("Location: ./index.php");
 		die();
 		break;
 	case "passwd":
-		if(!$_SESSION['username']){ die("You must be logged in to do anything on these forums."); }
+		if(!$_SESSION['username']){ die(L("error.logged")); }
 		$msg = changePasswd($_SESSION['username'], $_POST['currPass'], $_POST['pass1'], $_POST['pass2']);
 		if($msg == false){
-			$msg = "There was an error updating the password, please try again.";
+			$msg = L("error.updating.password");
 		}
 		if($msg === true){
-			$msg = "Password has changed successfully!";
+			$msg = L("error.password.changed");
 		}
 		header("Location: ./change.php?msg=$msg");
 		die();
 		break;
 }
-function isNotEmpty($input) 
+function isNotEmpty($input)
 {
     $strTemp = $input;
     $strTemp = trim($strTemp);
