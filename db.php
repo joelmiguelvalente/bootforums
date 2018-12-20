@@ -39,7 +39,7 @@ function adduser($username, $password){
 		$username = substr($username, 0, 12);
 	}
 	if(strlen($username) <= 3){
-		return "Username must be at least 4 characters long!";
+		return L("username.least.4");
 	}
 	$salt = random_bytes(22);
 	$options = array('cost' => 11,'salt'=> $salt);
@@ -48,33 +48,33 @@ function adduser($username, $password){
 	$de = $users -> get("username", "username", $username);
 	if($de){ return false; }
 	$tmp = $users -> add(array("username"=>$username, "password"=>$pass));
-	if(!$tmp){ $tmp = "Please login to continue registration:"; write_log("[REG] $username was registered.", $log_file);}
+	if(!$tmp){ $tmp = L("login.to.continue.registration".":"); write_log("[REG] $username was registered.", $log_file);}
 	return $tmp;
 }
 function changePasswd($username, $currPass, $newPass1, $newPass2){
 	global $usdata, $thdata, $log_file;
 	$username = clean($username);
 	if($newPass1 != $newPass2){
-		return "The new password does not match verification, please try again!";
+		return L("password.not.match");
 	}
-	if(!file_exists("$usdata/$username.dat")){ return "Username does not exist"; }
-	$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+	if(!file_exists("$usdata/$username.dat")){ return L("username.not.exist"); }
+	$salt = random_bytes(22);
 	$options = array('cost' => 11,'salt'=> $salt);
 	$username = clean($username);
 	$users = new Fllat($username, $usdata);
 	$index = $users -> index("username", $username);
-	if($index === null && !$index >= 0){ return "Could not find a password?"; }
+	if($index === null && !$index >= 0){ return L("not.find.password"); }
 	$canChange = $users ->get("password","username", $username);
 	$pass = password_verify($currPass, $canChange);
-	if(!$pass) {write_log("[PAS] $username attempted to change password, But failed.", $log_file); return "Current Password Mismatch"; }
+	if(!$pass) {write_log("[PAS] $username attempted to change password, But failed.", $log_file); return L("current.password.mismatch"); }
 	$cc_temp = array("username"=>$username, "password"=>password_hash($newPass1, PASSWORD_BCRYPT, $options));
 	$tmp = $users -> update($index, $cc_temp);
 	if($tmp){
 		write_log("[PAS] $username successfully changed password.", $log_file);
-		$tmp = "Password changed successfully!";
+		$tmp = L("password.changed");
 	} else {
 		write_log("[PAS] Unknown error while changing password for $username. Please confirm with apache/httpd/nginx logs.", $log_file);
-		$tmp = "There was an error changing your password, please contact the web master.";
+		$tmp = L("error.changing.password");
 	}
 	return $tmp;
 }
@@ -109,11 +109,11 @@ function addPost($topic, $post, $username){
 	}
 	$topic = clean($topic);
 	$topic = trim($topic);
-	
+
 	if($topic === '' || $topic === null || $post === ''){
 		return false;
 	}
-	
+
 	if(file_exists("$thdata/$topic.lock") || file_exists("$thdata/$topic.lockadmin")){ return false; }
 	if(!file_exists("$thdata/$topic.name")){ file_put_contents("$thdata/$topic.name",htmlspecialchars($name)); }
 	$posts = new Fllat($topic , $thdata);
@@ -164,7 +164,7 @@ function unlock($thread, $user){
 	} else {
 		return false;
 	}
-	
+
 }
 function deletePost($thread, $user){
 	global $thdata, $log_file;
@@ -209,40 +209,40 @@ function write_log($message, $logfile='') {
     // the constant is not defined and there is no log file given as input
     else {
         error_log('No log file defined!',0);
-        return array(status => false, message => 'No log file defined!');
+        return array(status => false, message => L("no.log"));
     }
   }
- 
+
   // Get time of request
   if( ($time = $_SERVER['REQUEST_TIME']) == '') {
     $time = time();
   }
- 
+
   // Get IP address
   if( ($remote_addr = $_SERVER['REMOTE_ADDR']) == '') {
     $remote_addr = "REMOTE_ADDR_UNKNOWN";
   }
- 
+
   // Get requested script
   if( ($request_uri = $_SERVER['REQUEST_URI']) == '') {
     $request_uri = "REQUEST_URI_UNKNOWN";
   }
- 
+
   // Format the date and time
   $date = date("Y-m-d H:i:s", $time);
- 
+
   // Append to the log file
   if($fd = @fopen($logfile, "a")) {
     $result = fputcsv($fd, array($date, $remote_addr, $request_uri, $message));
     fclose($fd);
- 
+
     if($result > 0)
-      return array(status => true);  
+      return array(status => true);
     else
-      return array(status => false, message => 'Unable to write to '.$logfile.'!');
+      return array(status => false, message => sprintf(L("no.log.write"), $logfile));
   }
   else {
-    return array(status => false, message => 'Unable to open log '.$logfile.'!');
+    return array(status => false, message => sprintf(L("no.log.write"), $logfile));
   }
 }
 ?>

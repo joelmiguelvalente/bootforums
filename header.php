@@ -13,7 +13,7 @@ finds this PHP script as useful as I do."
 */
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= L("key") ?>">
     <head>
         <title><?php echo $config['title']; ?></title>
         <meta charset="utf-8">
@@ -27,7 +27,6 @@ finds this PHP script as useful as I do."
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrapvalidator.min.js"></script>
-        <script src="js/tinymce/tinymce.min.js"></script>
         <script src="js/simplemde.min.js"></script>
         <script>
         $(document).ready(function(){
@@ -42,7 +41,7 @@ finds this PHP script as useful as I do."
                 toolbar: [<?= $config["wysiwygButtons"] ?>]
             })
         })
-    		</script>
+    	</script>
     </head>
 
     <body>
@@ -51,7 +50,7 @@ finds this PHP script as useful as I do."
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only"><?= L("toggle.navigation") ?></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -61,9 +60,9 @@ finds this PHP script as useful as I do."
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="<?php echo $config['home']; ?>">Home</a></li>
-                    <li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Register</a></li>
-                    <li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>>Log in</a></li>
+                    <li><a href="<?php echo $config['home']; ?>"><?= L("home") ?></a></li>
+                    <li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>><?= L("register") ?></a></li>
+                    <li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>><?= L("login") ?></a></li>
                 </ul>
                                     <?php
             if($_SESSION['username']){
@@ -71,8 +70,8 @@ finds this PHP script as useful as I do."
                 ?>
                 <ul class="nav navbar-nav pull-right">
                     <li><form action="search.php" method="GET"><input type="text" class="form-control" name="search" id="search" placeholder="Search..."></form></li>
-                    <li><a href="change.php">Change Password</a></li>
-                    <li><a href="logout.php">Logout <?php echo $_SESSION['username'];?></a></li>
+                    <li><a href="change.php"><?= L("change.password") ?></a></li>
+                    <li><a href="logout.php"><?= sprintf(L("logout"),$_SESSION['username']) ?></a></li>
                 </ul>
                 <?php
             }

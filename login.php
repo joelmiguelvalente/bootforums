@@ -23,7 +23,7 @@ echo '<div class="container">';
 //Body content
 ?>
 <div class="page-header">
-  <h1>Log In</h1>
+  <h1><?= L("login") ?></h1>
 </div>
 <?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
 <div class="row">
@@ -31,25 +31,25 @@ echo '<div class="container">';
 <form action="submit.php" method="POST">
 	<input type="hidden" name="type" id="type" value="login" />
 	<div class="form-group">
-    <label for="user">Username:</label>
+    <label for="user"><?= L("username") ?>:</label>
     <input type="username" class="form-control" id="user" name="user">
   </div>
   <div class="form-group">
-    <label for="pass">Password:</label>
+    <label for="pass"><?= L("password") ?>:</label>
     <input type="password" class="form-control" id="pass" name="pass">
   </div>
-  	<?php 
+  	<?php
   	if($config['captchaLoginForce'] === true){
   		echo '';
   		?>
   		  <div class="form-group">
-  			<label for="cap">Captcha Request:</label><br />
+  			<label for="cap"><?= L("captcha.request") ?>:</label><br />
   			<img src="<?php echo $_SESSION['captcha']['image_src']; ?>">&nbsp;&nbsp;<input type="text" name="cap" id="cap" rows="8">
   		</div>
   		<?php
   	}
   	?>
-  <button type="submit" class="btn btn-primary pull-right">Submit</button>
+  <button type="submit" class="btn btn-primary pull-right"><?= L("submit") ?></button>
 </form>
 </div>
 </div>

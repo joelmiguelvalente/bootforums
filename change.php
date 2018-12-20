@@ -30,7 +30,7 @@ echo '<div class="container">';
 ?>
 
 <div class="page-header">
-  <h1>Change Current Password</h1>
+  <h1><?= l("change.current.password") ?></h1>
 </div>
 <?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
 <div class="row">
@@ -38,20 +38,20 @@ echo '<div class="container">';
 		<form action="submit.php" method="POST">
 			<input type="hidden" name="type" id="type" value="passwd">
 			<div class="form-group">
-	    		<label for="user">Current Password:</label>
+	    		<label for="user"><?= l("current.password") ?>:</label>
 	    		<input type="password" class="form-control" id="currPass" name="currPass">
   			</div>
   			<br />
   			<div class="form-group">
-	    		<label for="pass">New Password:</label>
+	    		<label for="pass"><?= l("new.password") ?>:</label>
 	    		<input type="password" class="form-control" id="pass1" name="pass1">
   			</div>
 			<div class="form-group">
-	    		<label for="pass">Verify Password:</label>
+	    		<label for="pass"><?= l("verify.password") ?>:</label>
 	    		<input type="password" class="form-control" id="pass2" name="pass2">
   			</div>
-			<button type="submit" class="btn btn-primary pull-right">Submit</button>
-			
+			<button type="submit" class="btn btn-primary pull-right"><?= l("submit") ?></button>
+
 		</form>
 	</div>
 </div>
