@@ -12,13 +12,14 @@ finds this PHP script as useful as I do."
 
 */
 session_start();
+require("functions.php");
 require("db.php");
 require("config.php");
 $type = "";
 if($_POST['type']){
 	$type = $_POST['type'];
 }
-if($_GET['type']){
+if(isset($_GET['type'])){
 	$type = $_GET['type'];
 }
 
