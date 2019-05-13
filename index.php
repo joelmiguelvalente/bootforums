@@ -31,15 +31,18 @@ echo '<div class="container">';
 if($config['announce'] !== ""){
 	echo '<div class="alert alert-info">'.$config['announce'].'</div>';
 }
-if($_SESSION['username'] && $config['allowNewThreads'] !== false){
+if(isset($_SESSION['username']) && $config['allowNewThreads'] !== false){
 	echo '<a href="post.php?type=new" class="btn btn-primary">'.L("new.post").'</a><br />';
 }
 if(!$config['allowNewThreads']){
 	echo '<div class="alert alert-warning">'.L("new.thread.locked").'</div>';
 }
-if(isAdmin($_SESSION['username']) && $config['allowNewThreads'] === false){
-	echo '<a href="post.php?type=new" class="btn btn-primary">'.L("new.post").'</a><br />';
+if(isset($_SESSION['username'])){
+	if(isAdmin($_SESSION['username']) && $config['allowNewThreads'] === false){
+		echo '<a href="post.php?type=new" class="btn btn-primary">'.L("new.post").'</a><br />';
+	}	
 }
+
 ?>
 <div class="page-header">
   <h1><?= L("latest.posts") ?></h1>
@@ -52,6 +55,7 @@ if(isAdmin($_SESSION['username']) && $config['allowNewThreads'] === false){
 	<tbody>
 <?php
 $files1 = scan_dir($config['thread_data']);
+$totalPages = 0;
 if($files1){
   $data = $config['thread_data'];
   $page = ! empty( $_GET['page'] ) ? (int) $_GET['page'] : 1;

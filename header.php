@@ -61,11 +61,11 @@ finds this PHP script as useful as I do."
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="<?php echo $config['home']; ?>"><?= L("home") ?></a></li>
-                    <li><a href="register.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>><?= L("register") ?></a></li>
-                    <li><a href="login.php" <?php if($_SESSION['username']){ echo "style=\"display: none;\""; } ?>><?= L("login") ?></a></li>
+                    <li><a href="register.php" <?php if(isset($_SESSION['username'])){ echo "style=\"display: none;\""; } ?>><?= L("register") ?></a></li>
+                    <li><a href="login.php" <?php if(isset($_SESSION['username'])){ echo "style=\"display: none;\""; } ?>><?= L("login") ?></a></li>
                 </ul>
                                     <?php
-            if($_SESSION['username']){
+            if(isset($_SESSION['username'])){
                 echo '';
                 ?>
                 <ul class="nav navbar-nav pull-right">

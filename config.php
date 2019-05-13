@@ -64,6 +64,6 @@ $config = array(
     "perPage" => 20, //Default amount of threads to show per page. (Index only.)
     "perPageThread" => 10, //Default reply amount to show in each thread (View mode)
     "allowNewThreads" => true, //Enable or disable the New Post button on index page, this will also disable cURL posts!
-    "theme" => "cosmo"//Select a theme: orig, cyborg, dark, journal, superhero, readable, flat, or cosmo.
+    "theme" => "cosmo",//Select a theme: orig, cyborg, dark, journal, superhero, readable, flat, or cosmo.
     "wysiwygButtons" => '"bold", "italic", "strikethrough", "heading", "|", "link", "image", "code", "horizontal-rule", "table", "|", "preview", "side-by-side", "|", "undo", "redo", "|", "fullscreen", "guide"' //You can find the list here: https://github.com/sparksuite/simplemde-markdown-editor
 );

@@ -25,7 +25,7 @@ echo '<div class="container">';
 <div class="page-header">
   <h1><?= L("login") ?></h1>
 </div>
-<?php if($_GET['msg']){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
+<?php if(isset($_GET['msg'])){ echo '<p style="color:black;">'.$_GET['msg'].'</p>'; } ?>
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 <form action="submit.php" method="POST">
